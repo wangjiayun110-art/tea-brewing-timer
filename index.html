@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<title>Tea Brewing Timer — Water, Leaf, Time for 6 Teas | Tea &amp; Stillness</title>
+<meta name="description" content="A free tea brewing timer. Pick your tea, get the water temperature, leaf amount and steeping time for green, white, yellow, oolong, black and pu-erh.">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Tea Brewing Timer","applicationCategory":"LifestyleApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0"},"description":"A free timer that tells you the water temperature, leaf amount and steeping time for Chinese tea, then counts the steep down for you.","url":"https://timer.calmsteep.com/","image":"https://calmsteep.com/images/cover-brew.webp"}</script>
+<link rel="canonical" href="https://timer.calmsteep.com/">
+<meta property="og:title" content="Tea Brewing Timer — Water, Leaf, Time for 6 Teas | Tea &amp; Stillness">
+<meta property="og:description" content="A free tea brewing timer. Pick your tea, get the water temperature, leaf amount and steeping time for green, white, yellow, oolong, black and pu-erh.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://timer.calmsteep.com/">
+<meta property="og:image" content="https://calmsteep.com/images/cover-brew.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tea Brewing Timer — Water, Leaf, Time for 6 Teas | Tea &amp; Stillness">
+<meta name="twitter:description" content="A free tea brewing timer. Pick your tea, get the water temperature, leaf amount and steeping time for green, white, yellow, oolong, black and pu-erh.">
+<meta name="twitter:image" content="https://calmsteep.com/images/cover-brew.webp">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://calmsteep.com/"},{"@type":"ListItem","position":2,"name":"Tea Brewing Timer","item":"https://timer.calmsteep.com/"}]}</script>
+<style>
+.lang-switch{display:flex;justify-content:flex-end;gap:6px;align-items:center;margin-bottom:4px}
+.lang-switch button{font-family:Georgia,serif;font-size:14px;background:transparent;border:1px solid #C9B896;border-radius:999px;padding:4px 12px;cursor:pointer;color:#5A4E40}
+.lang-switch button.active{background:#2B2620;border-color:#2B2620;color:#FAF6EF}
+.lang-switch span{color:#C9B896}
+.tea-picker{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.tea-btn{font-family:Georgia,serif;font-size:17px;background:#fff;border:1px solid #C9B896;border-radius:999px;padding:9px 18px;cursor:pointer;color:#2B2620}
+.tea-btn:hover{border-color:#7A5C3A}
+.tea-btn.active{background:#7A5C3A;border-color:#7A5C3A;color:#FAF6EF}
+.mode-row{display:flex;gap:10px;margin:6px 0 18px}
+.mode-btn{font-family:Georgia,serif;font-size:16px;background:#fff;border:1px solid #C9B896;border-radius:8px;padding:8px 16px;cursor:pointer;color:#2B2620}
+.mode-btn.active{background:#2B2620;border-color:#2B2620;color:#FAF6EF}
+.params{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.param{border:1px solid #E5DCCB;background:#fff;border-radius:10px;padding:14px;text-align:center}
+.param .v{font-size:26px;color:#8A3B2E}
+.param .k{font-size:14px;color:#8A7D6B;margin-top:2px}
+.timer-box{border:1px solid #E5DCCB;background:#fff;border-radius:12px;padding:28px 20px;text-align:center;margin:18px 0}
+.timer-display{font-size:64px;line-height:1;color:#2B2620;font-variant-numeric:tabular-nums}
+.timer-label{font-size:16px;color:#8A7D6B;margin-top:8px}
+.progress{height:8px;background:#EFE7D8;border-radius:4px;margin:20px 0 6px;overflow:hidden}
+.progress-bar{height:100%;background:#7A5C3A;width:0%}
+.timer-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.timer-controls button{font-family:Georgia,serif;font-size:17px;border-radius:8px;padding:10px 22px;cursor:pointer}
+.btn-start{background:#8A3B2E;border:1px solid #8A3B2E;color:#FAF6EF}
+.btn-ghost{background:#fff;border:1px solid #C9B896;color:#2B2620}
+.btn-start:disabled{opacity:.5;cursor:default}
+.done-note{font-size:18px;color:#8A3B2E;margin-top:12px;display:none}
+@media (max-width:600px){.params{grid-template-columns:1fr 1fr 1fr}.timer-display{font-size:52px}.param .v{font-size:22px}}
+</style>
+</head>
+<body>
+<header><div class="lang-switch"><button id="langEn" type="button" class="active">EN</button><span>|</span><button id="langZh" type="button">中文</button></div>
+<div class="site"><a id="brandLink" href="https://calmsteep.com/"><span class="mark">茶</span><span id="brandName">Tea &amp; Stillness</span></a></div>
+<p class="tagline" id="tagline">Chinese tea, slowly</p><h1 id="pageTitle">Tea Brewing Timer</h1><p class="lede" id="lede">A tea brewing timer does one job: pick your tea, get the temperature, the leaf amount and the steeping time, then let the timer watch the clock, so you can watch the leaves.</p></header>
+<main>
+<p id="intro">Most bad cups are not bad tea — and that is what a tea brewing timer is for. They are good leaves steeped in water that was too hot, or left in the water too long. This timer fixes the second half of that problem, and the numbers below fix the first.</p>
+
+<h2 id="step1">1. Choose your tea</h2>
+<div class="tea-picker" id="teaPicker"></div>
+
+<h2 id="step2">2. Choose how you brew</h2>
+<div class="mode-row">
+<button class="mode-btn active" id="modeMug" type="button">Mug — 250 ml, one long steep</button>
+<button class="mode-btn" id="modeGongfu" type="button">Gongfu — small pot, short steeps</button>
+</div>
+
+<h2 id="step3">3. How strong do you like it?</h2>
+<div class="mode-row">
+<button class="mode-btn" id="strLight" type="button">Light — a little shorter</button>
+<button class="mode-btn active" id="strMedium" type="button">Medium — as listed</button>
+<button class="mode-btn" id="strStrong" type="button">Strong — a little longer</button>
+</div>
+<p style="font-size:16px;color:#5A4E40" id="adjustNote">Or adjust the time yourself with the −30s / +30s buttons under the timer. The timer keeps running correctly even if you switch tabs.</p>
+
+<div class="params">
+<div class="param"><div class="v" id="pTemp">80°C</div><div class="k" id="kTemp">Water temperature</div></div>
+<div class="param"><div class="v" id="pLeaf">2 g</div><div class="k" id="kLeaf">Loose leaves</div></div>
+<div class="param"><div class="v" id="pTime">2:00</div><div class="k" id="kTime">Steeping time</div></div>
+</div>
+<p id="pNote" style="font-size:16px;color:#5A4E40">Green tea turns bitter in boiling water. Let the kettle sit for about two minutes after boiling, or pour the water into a pitcher first to cool it.</p>
+
+<div class="timer-box">
+<div class="timer-display" id="timerDisplay">2:00</div>
+<div class="timer-label" id="timerLabel">Green Tea · Steep 1 · Mug</div>
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+<div class="timer-controls">
+<button class="btn-start" id="startBtn" type="button">Start timer</button>
+<button class="btn-ghost" id="pauseBtn" type="button" disabled>Pause</button>
+<button class="btn-ghost" id="resetBtn" type="button">Reset</button>
+<button class="btn-ghost" id="minusBtn" type="button">−30s</button>
+<button class="btn-ghost" id="plusBtn" type="button">+30s</button>
+<button class="btn-ghost" id="nextBtn" type="button">Next steep →</button>
+</div>
+<p class="done-note" id="doneNote">Time to pour. Taste it before deciding whether the next steep needs longer.</p>
+</div>
+
+<h2 id="tableH">Steeping times at a glance</h2>
+<p id="tableIntro">These are starting points for a 250 ml mug. Your leaves, your water and your taste will move them a little, and that is normal. If a cup is too light, steep longer next time. If it is bitter, use cooler water or fewer leaves, not a longer steep.</p>
+<ul id="timeTable">
+<li><strong>Green tea:</strong> 80°C / 175°F, about 2 g, 2 minutes.</li>
+<li><strong>White tea:</strong> 85°C / 185°F, about 2 g, 3 minutes.</li>
+<li><strong>Yellow tea:</strong> 80°C / 175°F, about 2 g, 2½ minutes.</li>
+<li><strong>Oolong tea:</strong> 95°C / 200°F, about 3 g, 3 minutes.</li>
+<li><strong>Black tea:</strong> 95°C / 200°F, about 2–3 g, 3 minutes.</li>
+<li><strong>Pu-erh tea:</strong> 100°C / 212°F, about 3 g, 2 minutes. Rinse the leaves once with hot water first, and pour that rinse away.</li>
+</ul>
+
+<h2 id="whyH">Why timing matters more than technique</h2>
+<p id="whyP">A tea brewing timer matters because tea keeps extracting as long as the leaves sit in water. A cup that tasted perfect at two minutes can turn harsh at ten. That is why the simplest habit in Chinese tea is also the most useful one: pour the tea out when the timer ends, and keep the leaves separate until the next infusion. Most Chinese teas can be steeped several times, and the second and third infusions are often the most interesting, because the leaves have fully opened. Add about 30 seconds for each later steep in a mug, or about 10 seconds in a small gongfu pot.</p>
+
+<h2 id="faqH">Questions beginners ask</h2>
+<h3 id="faqQ1">How long should I steep green tea?</h3>
+<p id="faqA1">About 2 minutes in water around 80°C. Boiling water makes green tea bitter and flat, so let the kettle cool first.</p>
+<h3 id="faqQ2">Can I re-steep the same leaves?</h3>
+<p id="faqA2">Yes. Good loose-leaf tea is usually good for two to four infusions. Each later steep needs a little more time. When the flavour turns thin and flat, the leaves are done.</p>
+<h3 id="faqQ3">How much tea should I use?</h3>
+<p id="faqA3">About 2 grams per 250 ml mug — roughly one generous teaspoon. In a small gongfu pot, use more leaves and much shorter steeps: about 5 grams per 100 ml, starting at 20 to 45 seconds.</p>
+<h3 id="faqQ4">Do I need a special timer?</h3>
+<p id="faqA4">No. Any timer works. The point of this page is the numbers next to it: the right temperature and the right time for each kind of tea.</p>
+
+<section class="related"><h2 id="relH">New to brewing? Read the guides →</h2><ul><li><a id="guideLink1" href="https://calmsteep.com/how-to-brew-chinese-tea.html">How to Brew Chinese Tea for Beginners</a></li><li><a id="guideLink2" href="https://calmsteep.com/gongfu-vs-mug-brewing.html">Gongfu vs Mug Brewing: Which Way Suits You?</a></li></ul></section>
+</main>
+<footer>
+<p><a id="footLink" href="https://calmsteep.com/">More brewing guides on Tea &amp; Stillness</a></p><p id="footNote">Tea &amp; Stillness — Chinese tea culture and slow living. This site shares culture and everyday practice, not medical advice.</p></footer>
+<script>
+/* ---- i18n dictionary: every visible string, EN + 中文 ---- */
+var I18N = {
+en: {
+  title: "Tea Brewing Timer — Water, Leaf, Time for 6 Teas | Tea & Stillness",
+  desc: "A free tea brewing timer. Pick your tea, get the water temperature, leaf amount and steeping time for green, white, yellow, oolong, black and pu-erh.",
+  brand: "Tea & Stillness",
+  brandHref: "https://calmsteep.com/",
+  tagline: "Chinese tea, slowly",
+  h1: "Tea Brewing Timer",
+  lede: "A tea brewing timer does one job: pick your tea, get the temperature, the leaf amount and the steeping time, then let the timer watch the clock, so you can watch the leaves.",
+  intro: "Most bad cups are not bad tea — and that is what a tea brewing timer is for. They are good leaves steeped in water that was too hot, or left in the water too long. This timer fixes the second half of that problem, and the numbers below fix the first.",
+  step1: "1. Choose your tea",
+  step2: "2. Choose how you brew",
+  step3: "3. How strong do you like it?",
+  modeMug: "Mug — 250 ml, one long steep",
+  modeGongfu: "Gongfu — small pot, short steeps",
+  strLight: "Light — a little shorter",
+  strMedium: "Medium — as listed",
+  strStrong: "Strong — a little longer",
+  adjustNote: "Or adjust the time yourself with the −30s / +30s buttons under the timer. The timer keeps running correctly even if you switch tabs.",
+  kTemp: "Water temperature",
+  kLeaf: "Loose leaves",
+  kTime: "Steeping time",
+  start: "Start timer",
+  timing: "Timing…",
+  pause: "Pause",
+  reset: "Reset",
+  minus: "−30s",
+  plus: "+30s",
+  next: "Next steep →",
+  done: "Time to pour. Taste it before deciding whether the next steep needs longer.",
+  tableH: "Steeping times at a glance",
+  tableIntro: "These are starting points for a 250 ml mug. Your leaves, your water and your taste will move them a little, and that is normal. If a cup is too light, steep longer next time. If it is bitter, use cooler water or fewer leaves, not a longer steep.",
+  tableRows: [
+    "<li><strong>Green tea:</strong> 80°C / 175°F, about 2 g, 2 minutes.</li>",
+    "<li><strong>White tea:</strong> 85°C / 185°F, about 2 g, 3 minutes.</li>",
+    "<li><strong>Yellow tea:</strong> 80°C / 175°F, about 2 g, 2½ minutes.</li>",
+    "<li><strong>Oolong tea:</strong> 95°C / 200°F, about 3 g, 3 minutes.</li>",
+    "<li><strong>Black tea:</strong> 95°C / 200°F, about 2–3 g, 3 minutes.</li>",
+    "<li><strong>Pu-erh tea:</strong> 100°C / 212°F, about 3 g, 2 minutes. Rinse the leaves once with hot water first, and pour that rinse away.</li>"
+  ],
+  whyH: "Why timing matters more than technique",
+  whyP: "A tea brewing timer matters because tea keeps extracting as long as the leaves sit in water. A cup that tasted perfect at two minutes can turn harsh at ten. That is why the simplest habit in Chinese tea is also the most useful one: pour the tea out when the timer ends, and keep the leaves separate until the next infusion. Most Chinese teas can be steeped several times, and the second and third infusions are often the most interesting, because the leaves have fully opened. Add about 30 seconds for each later steep in a mug, or about 10 seconds in a small gongfu pot.",
+  faqH: "Questions beginners ask",
+  faq: [
+    ["How long should I steep green tea?", "About 2 minutes in water around 80°C. Boiling water makes green tea bitter and flat, so let the kettle cool first."],
+    ["Can I re-steep the same leaves?", "Yes. Good loose-leaf tea is usually good for two to four infusions. Each later steep needs a little more time. When the flavour turns thin and flat, the leaves are done."],
+    ["How much tea should I use?", "About 2 grams per 250 ml mug — roughly one generous teaspoon. In a small gongfu pot, use more leaves and much shorter steeps: about 5 grams per 100 ml, starting at 20 to 45 seconds."],
+    ["Do I need a special timer?", "No. Any timer works. The point of this page is the numbers next to it: the right temperature and the right time for each kind of tea."]
+  ],
+  relH: "New to brewing? Read the guides →",
+  guide1: "How to Brew Chinese Tea for Beginners",
+  guide1Href: "https://calmsteep.com/how-to-brew-chinese-tea.html",
+  guide2: "Gongfu vs Mug Brewing: Which Way Suits You?",
+  guide2Href: "https://calmsteep.com/gongfu-vs-mug-brewing.html",
+  footLink: "More brewing guides on Tea & Stillness",
+  footHref: "https://calmsteep.com/",
+  footNote: "Tea & Stillness — Chinese tea culture and slow living. This site shares culture and everyday practice, not medical advice.",
+  modeMugShort: "Mug",
+  modeGongfuShort: "Gongfu"
+},
+zh: {
+  title: "泡茶计时器：六大茶类水温、投茶量和浸泡时间 | 慢茶中文版",
+  desc: "免费泡茶计时器：选一种茶，给你水温、投茶量和浸泡时间，倒计时帮你看表。绿茶、白茶、黄茶、乌龙、红茶、普洱，杯泡和功夫泡都有。",
+  brand: "慢茶",
+  brandHref: "https://cn.calmsteep.com/",
+  tagline: "中国茶，慢慢喝",
+  h1: "泡茶计时器",
+  lede: "泡茶计时器只做一件事：选一种茶，给你水温、投茶量和浸泡时间，倒计时帮你看表，你只管看茶叶。",
+  intro: "多数难喝的茶不是茶叶不好，是水太烫，或者泡太久。计时器解决后一半的问题，下面的数字解决前一半。",
+  step1: "1. 选一种茶",
+  step2: "2. 选一种泡法",
+  step3: "3. 喜欢喝浓一点，还是淡一点？",
+  modeMug: "杯泡 — 250 毫升，一次泡久一点",
+  modeGongfu: "功夫泡 — 小壶，短时间多泡",
+  strLight: "淡一点 — 时间稍短",
+  strMedium: "适中 — 按表上的时间",
+  strStrong: "浓一点 — 时间稍长",
+  adjustNote: "也可以用计时器下面的 −30 秒 / +30 秒自己调时间。切到别的标签页，计时器照样走，不会停。",
+  kTemp: "水温",
+  kLeaf: "投茶量",
+  kTime: "浸泡时间",
+  start: "开始计时",
+  timing: "计时中…",
+  pause: "暂停",
+  reset: "重置",
+  minus: "−30 秒",
+  plus: "+30 秒",
+  next: "下一泡 →",
+  done: "时间到了，倒出来吧。先尝一口，再决定下一泡要不要泡久一点。",
+  tableH: "浸泡时间总表",
+  tableIntro: "下面是 250 毫升杯子的参考时间。茶叶、水、口味不同，时间可以上下浮动，这很正常。泡淡了，下一泡泡久一点；泡苦了，下次水温低一点、茶叶少一点，别泡更久。",
+  tableRows: [
+    "<li><strong>绿茶：</strong>80°C，约 2 克，2 分钟。</li>",
+    "<li><strong>白茶：</strong>85°C，约 2 克，3 分钟。</li>",
+    "<li><strong>黄茶：</strong>80°C，约 2 克，2 分半钟。</li>",
+    "<li><strong>乌龙茶：</strong>95°C，约 3 克，3 分钟。</li>",
+    "<li><strong>红茶：</strong>95°C，约 2–3 克，3 分钟。</li>",
+    "<li><strong>普洱茶：</strong>100°C，约 3 克，2 分钟。先用热水润一次茶，把润茶的水倒掉，再正式泡。</li>"
+  ],
+  whyH: "为什么时间比手法更重要",
+  whyP: "茶叶泡在水里就一直在出味道，两分钟刚好的茶，泡到十分钟可能就发苦发涩。所以中国茶最简单、也最有用的一个习惯就是：时间一到就把茶倒出来，茶叶和茶汤分开，等下一泡再续水。多数中国茶能泡好几次，第二、三泡常常最好喝，因为茶叶已经完全舒展开。杯泡每往后一泡加约 30 秒，功夫泡每往后一泡加约 10 秒。",
+  faqH: "新手常问",
+  faq: [
+    ["绿茶泡多久？", "80°C 左右的水，泡约 2 分钟。开水会把绿茶泡苦、泡平，先把水晾一晾。"],
+    ["同一泡茶叶能泡几次？", "能。好的散茶一般能泡两到四次，越往后时间越长。味道变淡变薄，就是泡完了。"],
+    ["一杯茶放多少茶叶？", "250 毫升的杯子约放 2 克，大概一小勺。功夫泡的小壶则多放茶叶、时间放短：100 毫升约放 5 克，从 20 到 45 秒开始试。"],
+    ["需要专门的计时器吗？", "不用。什么计时器都行。这个页面真正有用的是旁边的数字：每种茶对应的水温和时间。"]
+  ],
+  relH: "刚开始泡茶？先读指南 →",
+  guide1: "功夫茶入门",
+  guide1Href: "https://cn.calmsteep.com/gongfu-cha-rumen.html",
+  guide2: "泡茶计时器（中文版）",
+  guide2Href: "https://cn.calmsteep.com/tea-brewing-timer.html",
+  footLink: "更多泡茶指南，尽在慢茶中文版",
+  footHref: "https://cn.calmsteep.com/",
+  footNote: "慢茶 Tea & Stillness 中文版 — 写给海外华人的中国茶。本站只分享茶文化与日常泡茶做法，不卖茶，不提供医疗建议。",
+  modeMugShort: "杯泡",
+  modeGongfuShort: "功夫泡"
+}};
+/* ---- timer data: numbers identical to the original; only name/note are bilingual ---- */
+var TEAS = {
+  green:  {name: {en: "Green Tea", zh: "绿茶"},  mug: {temp: "80°C",  tempF: "175°F", leaf: "2 g",   secs: 120, note: {en: "Green tea turns bitter in boiling water. Let the kettle sit for about two minutes after boiling, or pour the water into a pitcher first to cool it.", zh: "绿茶怕开水，泡出来会发苦。水烧开后放两分钟再泡，或者先倒进公道杯里晾一晾。"}}, gongfu: {temp: "85°C", tempF: "185°F", leaf: "5 g / 100 ml", secs: 45, note: {en: "Short steeps, more leaves. Pour out fully each time, and add about 10 seconds per later steep.", zh: "时间短、茶叶多，每次都要倒干净，往后每泡加约 10 秒。"}}},
+  white:  {name: {en: "White Tea", zh: "白茶"},  mug: {temp: "85°C",  tempF: "185°F", leaf: "2 g",   secs: 180, note: {en: "White tea is forgiving. If it tastes thin, give it another minute rather than hotter water.", zh: "白茶比较耐泡。觉得淡，先加长时间，别急着加水温。"}}, gongfu: {temp: "90°C", tempF: "195°F", leaf: "5 g / 100 ml", secs: 45, note: {en: "Short steeps, more leaves. Pour out fully each time, and add about 10 seconds per later steep.", zh: "时间短、茶叶多，每次都要倒干净，往后每泡加约 10 秒。"}}},
+  yellow: {name: {en: "Yellow Tea", zh: "黄茶"}, mug: {temp: "80°C",  tempF: "175°F", leaf: "2 g",   secs: 150, note: {en: "Treat it like green tea: gentle heat, and do not walk away from the cup.", zh: "按绿茶的办法泡：水温低一点，别走开。"}}, gongfu: {temp: "85°C", tempF: "185°F", leaf: "5 g / 100 ml", secs: 45, note: {en: "Short steeps, more leaves. Pour out fully each time, and add about 10 seconds per later steep.", zh: "时间短、茶叶多，每次都要倒干净，往后每泡加约 10 秒。"}}},
+  oolong: {name: {en: "Oolong Tea", zh: "乌龙茶"}, mug: {temp: "95°C",  tempF: "200°F", leaf: "3 g",   secs: 180, note: {en: "Oolong likes hot water and room to open. Loosely rolled leaves need the full three minutes on the first steep.", zh: "乌龙喜欢热水和舒展的空间，卷紧的茶叶第一泡要泡满三分钟。"}}, gongfu: {temp: "100°C", tempF: "212°F", leaf: "5 g / 100 ml", secs: 30, note: {en: "Short steeps, more leaves. Pour out fully each time, and add about 10 seconds per later steep.", zh: "时间短、茶叶多，每次都要倒干净，往后每泡加约 10 秒。"}}},
+  black:  {name: {en: "Black Tea", zh: "红茶"},  mug: {temp: "95°C",  tempF: "200°F", leaf: "2–3 g", secs: 180, note: {en: "Water just off the boil. If it turns harsh, use a little less leaf next time, not a shorter steep.", zh: "水刚烧开就泡。如果喝起来发涩，下次茶叶少放一点，别缩短时间。"}}, gongfu: {temp: "100°C", tempF: "212°F", leaf: "5 g / 100 ml", secs: 30, note: {en: "Short steeps, more leaves. Pour out fully each time, and add about 10 seconds per later steep.", zh: "时间短、茶叶多，每次都要倒干净，往后每泡加约 10 秒。"}}},
+  puerh:  {name: {en: "Pu-erh Tea", zh: "普洱茶"}, mug: {temp: "100°C", tempF: "212°F", leaf: "3 g",   secs: 120, note: {en: "Rinse the leaves once with hot water first and pour that rinse away. Then steep for two minutes.", zh: "先用热水润一次茶，把润茶的水倒掉，再泡两分钟。"}}, gongfu: {temp: "100°C", tempF: "212°F", leaf: "5 g / 100 ml", secs: 20, note: {en: "Rinse once first, then steep briefly. Add about 10 seconds per later steep.", zh: "先润一次茶，再短时间快出汤，往后每泡加约 10 秒。"}}}
+};
+var ORDER = ["green", "white", "yellow", "oolong", "black", "puerh"];
+var tea = "green", mode = "mug", steep = 1, strength = 1, customSecs = 0, total = 120, remain = 120, endAt = 0, timer = null, running = false;
+var lang = "en";
+function t(){ return I18N[lang]; }
+
+function fmt(s){ var m = Math.floor(s / 60), r = s % 60; return m + ":" + (r < 10 ? "0" : "") + r; }
+function current(){ var t2 = TEAS[tea][mode]; var extra = mode === "mug" ? (steep - 1) * 30 : (steep - 1) * 10; return {temp: t2.temp, tempF: t2.tempF, leaf: t2.leaf, secs: Math.max(10, Math.round((t2.secs + extra) * strength) + customSecs), note: t2.note[lang]}; }
+function render(){
+  var c = current();
+  document.getElementById("pTemp").textContent = c.temp + " · " + c.tempF;
+  document.getElementById("pLeaf").textContent = c.leaf;
+  document.getElementById("pTime").textContent = fmt(c.secs);
+  document.getElementById("pNote").textContent = c.note;
+  var modeShort = mode === "mug" ? t().modeMugShort : t().modeGongfuShort;
+  document.getElementById("timerLabel").textContent = lang === "zh"
+    ? TEAS[tea].name.zh + " · 第 " + steep + " 泡 · " + modeShort
+    : TEAS[tea].name.en + " · Steep " + steep + " · " + modeShort;
+  if (!running) { total = c.secs; remain = c.secs; document.getElementById("timerDisplay").textContent = fmt(remain); document.getElementById("progressBar").style.width = "0%"; }
+}
+function buildPicker(){
+  var p = document.getElementById("teaPicker");
+  p.innerHTML = "";
+  ORDER.forEach(function(key){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "tea-btn" + (key === tea ? " active" : ""); b.textContent = TEAS[key].name[lang];
+    b.onclick = function(){ stop(); tea = key; steep = 1; customSecs = 0; document.querySelectorAll(".tea-btn").forEach(function(x){ x.classList.remove("active"); }); b.classList.add("active"); render(); };
+    p.appendChild(b);
+  });
+}
+function beep(){
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [0, 0.35, 0.7].forEach(function(d){
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value = 880; o.type = "sine";
+      g.gain.setValueAtTime(0.0001, ctx.currentTime + d);
+      g.gain.exponentialRampToValueAtTime(0.4, ctx.currentTime + d + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + d + 0.3);
+      o.start(ctx.currentTime + d); o.stop(ctx.currentTime + d + 0.32);
+    });
+  } catch (e) {}
+}
+function tick(){
+  remain = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
+  document.getElementById("timerDisplay").textContent = fmt(remain);
+  document.getElementById("progressBar").style.width = Math.min(100, ((total - remain) / total) * 100) + "%";
+  if (remain <= 0) { stop(); beep(); document.getElementById("doneNote").style.display = "block"; }
+}
+function start(){
+  if (running) return;
+  document.getElementById("doneNote").style.display = "none";
+  running = true; endAt = Date.now() + remain * 1000; timer = setInterval(tick, 250);
+  document.getElementById("startBtn").disabled = true;
+  document.getElementById("pauseBtn").disabled = false;
+  document.getElementById("startBtn").textContent = t().timing;
+}
+function stop(){
+  if (running) remain = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
+  running = false; if (timer) clearInterval(timer); timer = null;
+  document.getElementById("startBtn").disabled = false;
+  document.getElementById("pauseBtn").disabled = true;
+  document.getElementById("startBtn").textContent = t().start;
+}
+function adjust(delta){
+  var next = Math.max(10, total + delta);
+  var diff = next - total; total = next; remain = Math.max(0, remain + diff);
+  if (running) endAt = Date.now() + remain * 1000;
+  document.getElementById("timerDisplay").textContent = fmt(remain);
+  document.getElementById("pTime").textContent = fmt(total);
+  document.getElementById("progressBar").style.width = Math.min(100, ((total - remain) / total) * 100) + "%";
+}
+function setLang(l){
+  lang = (l === "zh") ? "zh" : "en";
+  try { localStorage.setItem("timer-lang", lang); } catch (e) {}
+  document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+  var d = I18N[lang];
+  document.title = d.title;
+  var md = document.querySelector('meta[name="description"]');
+  if (md) md.setAttribute("content", d.desc);
+  document.getElementById("langEn").classList.toggle("active", lang === "en");
+  document.getElementById("langZh").classList.toggle("active", lang === "zh");
+  document.getElementById("brandLink").href = d.brandHref;
+  document.getElementById("brandName").textContent = d.brand;
+  document.getElementById("tagline").textContent = d.tagline;
+  document.getElementById("pageTitle").textContent = d.h1;
+  document.getElementById("lede").textContent = d.lede;
+  document.getElementById("intro").textContent = d.intro;
+  document.getElementById("step1").textContent = d.step1;
+  document.getElementById("step2").textContent = d.step2;
+  document.getElementById("step3").textContent = d.step3;
+  document.getElementById("modeMug").textContent = d.modeMug;
+  document.getElementById("modeGongfu").textContent = d.modeGongfu;
+  document.getElementById("strLight").textContent = d.strLight;
+  document.getElementById("strMedium").textContent = d.strMedium;
+  document.getElementById("strStrong").textContent = d.strStrong;
+  document.getElementById("adjustNote").textContent = d.adjustNote;
+  document.getElementById("kTemp").textContent = d.kTemp;
+  document.getElementById("kLeaf").textContent = d.kLeaf;
+  document.getElementById("kTime").textContent = d.kTime;
+  document.getElementById("startBtn").textContent = running ? d.timing : d.start;
+  document.getElementById("pauseBtn").textContent = d.pause;
+  document.getElementById("resetBtn").textContent = d.reset;
+  document.getElementById("minusBtn").textContent = d.minus;
+  document.getElementById("plusBtn").textContent = d.plus;
+  document.getElementById("nextBtn").textContent = d.next;
+  document.getElementById("doneNote").textContent = d.done;
+  document.getElementById("tableH").textContent = d.tableH;
+  document.getElementById("tableIntro").textContent = d.tableIntro;
+  document.getElementById("timeTable").innerHTML = d.tableRows.join("");
+  document.getElementById("whyH").textContent = d.whyH;
+  document.getElementById("whyP").textContent = d.whyP;
+  document.getElementById("faqH").textContent = d.faqH;
+  for (var i = 0; i < 4; i++) {
+    document.getElementById("faqQ" + (i + 1)).textContent = d.faq[i][0];
+    document.getElementById("faqA" + (i + 1)).textContent = d.faq[i][1];
+  }
+  document.getElementById("relH").textContent = d.relH;
+  document.getElementById("guideLink1").href = d.guide1Href;
+  document.getElementById("guideLink1").textContent = d.guide1;
+  document.getElementById("guideLink2").href = d.guide2Href;
+  document.getElementById("guideLink2").textContent = d.guide2;
+  document.getElementById("footLink").href = d.footHref;
+  document.getElementById("footLink").textContent = d.footLink;
+  document.getElementById("footNote").textContent = d.footNote;
+  buildPicker();
+  render();
+}
+document.getElementById("langEn").onclick = function(){ setLang("en"); };
+document.getElementById("langZh").onclick = function(){ setLang("zh"); };
+document.getElementById("startBtn").onclick = start;
+document.getElementById("pauseBtn").onclick = function(){ stop(); };
+document.getElementById("resetBtn").onclick = function(){ stop(); steep = 1; customSecs = 0; document.getElementById("doneNote").style.display = "none"; render(); };
+document.getElementById("minusBtn").onclick = function(){ adjust(-30); };
+document.getElementById("plusBtn").onclick = function(){ adjust(30); };
+document.getElementById("nextBtn").onclick = function(){ stop(); steep++; customSecs = 0; document.getElementById("doneNote").style.display = "none"; render(); };
+document.getElementById("modeMug").onclick = function(){ stop(); mode = "mug"; steep = 1; customSecs = 0; this.classList.add("active"); document.getElementById("modeGongfu").classList.remove("active"); render(); };
+document.getElementById("modeGongfu").onclick = function(){ stop(); mode = "gongfu"; steep = 1; customSecs = 0; this.classList.add("active"); document.getElementById("modeMug").classList.remove("active"); render(); };
+function setStrength(f, btn){
+  stop(); strength = f; customSecs = 0;
+  ["strLight", "strMedium", "strStrong"].forEach(function(id){ document.getElementById(id).classList.remove("active"); });
+  btn.classList.add("active"); render();
+}
+document.getElementById("strLight").onclick = function(){ setStrength(0.75, this); };
+document.getElementById("strMedium").onclick = function(){ setStrength(1, this); };
+document.getElementById("strStrong").onclick = function(){ setStrength(1.3, this); };
+(function initLang(){
+  var stored = null;
+  try { stored = localStorage.getItem("timer-lang"); } catch (e) {}
+  var initial = stored || (((navigator.language || "").toLowerCase().indexOf("zh") === 0) ? "zh" : "en");
+  setLang(initial);
+})();
+</script>
+</body>
+</html>
