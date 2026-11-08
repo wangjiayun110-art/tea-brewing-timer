@@ -122,7 +122,7 @@
 <section class="related"><h2 id="relH">New to brewing? Read the guides →</h2><ul><li><a id="guideLink1" href="https://calmsteep.com/how-to-brew-chinese-tea.html">How to Brew Chinese Tea for Beginners</a></li><li><a id="guideLink2" href="https://calmsteep.com/gongfu-vs-mug-brewing.html">Gongfu vs Mug Brewing: Which Way Suits You?</a></li></ul></section>
 </main>
 <footer>
-<p><a id="footLink" href="https://calmsteep.com/">More brewing guides on Tea &amp; Stillness</a></p><p id="footNote">Tea &amp; Stillness — Chinese tea culture and slow living. This site shares culture and everyday practice, not medical advice.</p></footer>
+<p><a id="footLink" href="https://calmsteep.com/">More brewing guides on Tea &amp; Stillness</a></p><p><a id="githubLink" href="https://github.com/wangjiayun110-art/tea-brewing-timer" target="_blank" rel="noopener">View source on GitHub</a></p><p id="footNote">Tea &amp; Stillness — Chinese tea culture and slow living. This site shares culture and everyday practice, not medical advice.</p></footer>
 <script>
 /* ---- i18n dictionary: every visible string, EN + 中文 ---- */
 var I18N = {
@@ -181,6 +181,7 @@ en: {
   guide2Href: "https://calmsteep.com/gongfu-vs-mug-brewing.html",
   footLink: "More brewing guides on Tea & Stillness",
   footHref: "https://calmsteep.com/",
+  githubLink: "View source on GitHub",
   footNote: "Tea & Stillness — Chinese tea culture and slow living. This site shares culture and everyday practice, not medical advice.",
   modeMugShort: "Mug",
   modeGongfuShort: "Gongfu"
@@ -240,6 +241,7 @@ zh: {
   guide2Href: "https://cn.calmsteep.com/tea-brewing-timer.html",
   footLink: "更多泡茶指南，尽在慢茶中文版",
   footHref: "https://cn.calmsteep.com/",
+  githubLink: "在 GitHub 上查看源码",
   footNote: "慢茶 Tea & Stillness 中文版 — 写给海外华人的中国茶。本站只分享茶文化与日常泡茶做法，不卖茶，不提供医疗建议。",
   modeMugShort: "杯泡",
   modeGongfuShort: "功夫泡"
@@ -377,6 +379,7 @@ function setLang(l){
   document.getElementById("guideLink2").textContent = d.guide2;
   document.getElementById("footLink").href = d.footHref;
   document.getElementById("footLink").textContent = d.footLink;
+  document.getElementById("githubLink").textContent = d.githubLink;
   document.getElementById("footNote").textContent = d.footNote;
   buildPicker();
   render();
